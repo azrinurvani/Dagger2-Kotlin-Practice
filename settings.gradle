@@ -1,0 +1,2 @@
+rootProject.name='Dagger2 Kotlin Practice'
+include ':app'
