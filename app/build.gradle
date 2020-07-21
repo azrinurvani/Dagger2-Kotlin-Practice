@@ -58,5 +58,27 @@ dependencies {
     def lifecycle_version = '2.1.0-alpha03'
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
+//    Retrofit depedency
+    def retrofit_version = "2.5.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+//    RxJava
+    def rxjava_version = '2.1.1'
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+//    RxJavaAdapter
+    def rxcalladapter_version = '2.5.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version"
+
+//    ReactiveStreamse
+    def reactivestreams_version = "1.1.1"
+    implementation "android.arch.lifecycle:reactivestreams:$reactivestreams_version"
+
+//    Navigation Android Jetpack
+    def nav_version = "2.3.0-alpha01"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
 
 }
