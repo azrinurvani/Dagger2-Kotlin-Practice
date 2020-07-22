@@ -11,6 +11,7 @@ import com.mobile.azrinurvani.dagger2kotlinpractice.util.Constants
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
@@ -25,6 +26,8 @@ class AppModule {
     open fun provideRetrofitInstance() : Retrofit{
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
+                //TODO 14 - Add CallADapterFactory for RxJava2
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
