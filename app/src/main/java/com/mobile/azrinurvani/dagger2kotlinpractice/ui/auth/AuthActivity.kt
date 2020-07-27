@@ -4,6 +4,8 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -64,10 +66,38 @@ class AuthActivity : DaggerAppCompatActivity() {
 
     //TODO 23 - Create subscribeOrbsever, untuk memproses source yang ada pada authenticateWithId function
     private fun subscribeObserver(){
-        viewModel.observeUser().observe(this, Observer<User?> { user ->
-            if (user != null) {
-                Log.d(TAG, "onChanged: " + user.email)
+        //TODO 28 - Delete previous observer method and create new observer viewModel with 4 status AuthResource
+       viewModel.observeUser().observe(this, Observer {
+            when (it.status){
+                AuthResource.AuthStatus.LOADING -> {
+                    showProgressBar(true)
+                }
+
+                AuthResource.AuthStatus.ERROR -> {
+                    showProgressBar(false)
+                    Toast.makeText(this,it.message+ "\nDid you enter a number between 1 and 10? ",Toast.LENGTH_LONG).show()
+                }
+
+                AuthResource.AuthStatus.AUTHENTICATED -> {
+                    showProgressBar(false)
+                    Log.d(TAG, "onChanged : LOGIN SUCCESS : "+it.data?.email)
+                }
+
+                AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
+                    showProgressBar(false)
+                }
+
             }
-        })
+       })
     }
+
+    //TODO 29 - Create new method for handle visibility progress bar
+    private fun showProgressBar(isVisible : Boolean){
+        if (isVisible){
+            progress_bar.visibility = View.VISIBLE
+        }else{
+            progress_bar.visibility = View.GONE
+        }
+    }
+
 }

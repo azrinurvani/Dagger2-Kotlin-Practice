@@ -10,13 +10,16 @@ import com.mobile.azrinurvani.dagger2kotlinpractice.network.AuthApi
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import io.reactivex.functions.Function
 import javax.inject.Inject
 
 
 class AuthViewModel @Inject constructor(private val authApi: AuthApi) : ViewModel() {
 
 //    TODO 19 - Create private mediator live data variabel
-    private val authUser = MediatorLiveData<User>()
+//    private val authUser = MediatorLiveData<User>()
+//    TODO 26 - Change authUser object
+    private val authUser = MediatorLiveData<AuthResource<User>>()
 
     companion object{
         private const val TAG = "AuthViewModel"
@@ -39,12 +42,32 @@ class AuthViewModel @Inject constructor(private val authApi: AuthApi) : ViewMode
     }
     //TODO 21 - create auhthtenticateWithId function, merubah source berupa live data ke dalam bentuk observer
     fun authenticateWithId(userId :Int) {
-        val source : LiveData<User> = LiveDataReactiveStreams.fromPublisher(
+        //TODO 27 - add this line for set value auth resource as loading
+        authUser.value = AuthResource.loading()
+
+        val source : LiveData<AuthResource<User>> = LiveDataReactiveStreams.fromPublisher(
             authApi.getUser(userId).
-                    subscribeOn(Schedulers.io())
+                //TODO 29 - Create onErrorReturn and Map
+                //instead calling on error happen
+                onErrorReturn {
+                    var errorUser = User()
+                    errorUser.id = -1
+                    errorUser
+                }.
+                map(object : Function<User,AuthResource<User>>{
+                    override fun apply(user: User): AuthResource<User> {
+                        if (user.id == -1){
+                            return AuthResource.error("Could not authenticate")
+                        }
+                        return AuthResource.authenticated(user)
+                    }
+                }).
+                subscribeOn(Schedulers.io())
         )
-        authUser.addSource(source, object : Observer<User?>, androidx.lifecycle.Observer<User> {
-            override fun onChanged(user: User?) {
+
+        //TODO 30 - Change ouput Observer to AuthResource<User>
+        authUser.addSource(source, object : Observer<User?>, androidx.lifecycle.Observer<AuthResource<User>> {
+            override fun onChanged(user: AuthResource<User>) {
                 authUser.value = user
                 authUser.removeSource(source)
             }
@@ -69,7 +92,7 @@ class AuthViewModel @Inject constructor(private val authApi: AuthApi) : ViewMode
 
 
     //TODO 20 - Create observeUser function to return authUser
-    fun observeUser() : LiveData<User>{
+    fun observeUser() : LiveData<AuthResource<User>>{
         return authUser
     }
 }
