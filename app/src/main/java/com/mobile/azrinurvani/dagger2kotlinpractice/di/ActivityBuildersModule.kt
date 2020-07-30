@@ -1,5 +1,6 @@
 package com.mobile.azrinurvani.dagger2kotlinpractice.di
 
+import com.mobile.azrinurvani.dagger2kotlinpractice.ui.main.MainActivity
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.auth.AuthModule
 import com.mobile.azrinurvani.dagger2kotlinpractice.ui.auth.AuthActivity
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.auth.AuthViewModelModule
@@ -18,8 +19,9 @@ abstract class ActivityBuildersModule {
     ])
     abstract fun contributeAuthActivity() : AuthActivity
 
-//    @ContributesAndroidInjector
-//    abstract fun contributeMainActivity() : MainActivity
+    //TODO 45- Add contributeAndroidInjector for MainActivity
+    @ContributesAndroidInjector
+    abstract fun contributeMainActivity() : MainActivity
 
 }
 

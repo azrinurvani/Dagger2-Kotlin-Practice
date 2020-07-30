@@ -6,16 +6,16 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.RequestManager
 import com.mobile.azrinurvani.dagger2kotlinpractice.R
-import com.mobile.azrinurvani.dagger2kotlinpractice.models.User
 import com.mobile.azrinurvani.dagger2kotlinpractice.viewmodels.ViewModelProviderFactory
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 import javax.inject.Inject
+import android.content.Intent
+import com.mobile.azrinurvani.dagger2kotlinpractice.ui.main.MainActivity
 
 
 class AuthActivity : DaggerAppCompatActivity() {
@@ -67,7 +67,7 @@ class AuthActivity : DaggerAppCompatActivity() {
     //TODO 23 - Create subscribeOrbsever, untuk memproses source yang ada pada authenticateWithId function
     private fun subscribeObserver(){
         //TODO 28 - Delete previous observer method and create new observer viewModel with 4 status AuthResource
-       viewModel.observeUser().observe(this, Observer {
+       viewModel.observeAuthState().observe(this, Observer {
             when (it.status){
                 AuthResource.AuthStatus.LOADING -> {
                     showProgressBar(true)
@@ -81,6 +81,7 @@ class AuthActivity : DaggerAppCompatActivity() {
                 AuthResource.AuthStatus.AUTHENTICATED -> {
                     showProgressBar(false)
                     Log.d(TAG, "onChanged : LOGIN SUCCESS : "+it.data?.email)
+                    onLoginSuccess()
                 }
 
                 AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
@@ -98,6 +99,13 @@ class AuthActivity : DaggerAppCompatActivity() {
         }else{
             progress_bar.visibility = View.GONE
         }
+    }
+
+
+    private fun onLoginSuccess(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 }

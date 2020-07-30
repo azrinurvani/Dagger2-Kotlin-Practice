@@ -2,6 +2,7 @@ package com.mobile.azrinurvani.dagger2kotlinpractice.di
 
 import android.app.Application
 import com.mobile.azrinurvani.dagger2kotlinpractice.BaseApplication
+import com.mobile.azrinurvani.dagger2kotlinpractice.SessionManager
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -21,6 +22,9 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent : AndroidInjector<BaseApplication>{
+
+    //TODO 35 - Create sessionManager() function in AppComponent
+    fun sessionManager(): SessionManager
 
     @Component.Builder
     interface Builder{

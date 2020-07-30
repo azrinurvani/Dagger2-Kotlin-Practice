@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import com.mobile.azrinurvani.dagger2kotlinpractice.SessionManager
 import com.mobile.azrinurvani.dagger2kotlinpractice.models.User
 import com.mobile.azrinurvani.dagger2kotlinpractice.network.AuthApi
 import io.reactivex.Observer
@@ -14,12 +15,16 @@ import io.reactivex.functions.Function
 import javax.inject.Inject
 
 
-class AuthViewModel @Inject constructor(private val authApi: AuthApi) : ViewModel() {
+class AuthViewModel @Inject constructor(
+    private val authApi: AuthApi,
+    private val sessionManager: SessionManager
+) : ViewModel() {
 
 //    TODO 19 - Create private mediator live data variabel
 //    private val authUser = MediatorLiveData<User>()
 //    TODO 26 - Change authUser object
-    private val authUser = MediatorLiveData<AuthResource<User>>()
+//    TODO 37 - Delete authUserObject
+//    private val authUser = MediatorLiveData<AuthResource<User>>()
 
     companion object{
         private const val TAG = "AuthViewModel"
@@ -40,13 +45,21 @@ class AuthViewModel @Inject constructor(private val authApi: AuthApi) : ViewMode
 //            })
 
     }
-    //TODO 21 - create auhthtenticateWithId function, merubah source berupa live data ke dalam bentuk observer
+    //TODO 21 - create auhthenticateWithId function, merubah source berupa live data ke dalam bentuk observer
     fun authenticateWithId(userId :Int) {
         //TODO 27 - add this line for set value auth resource as loading
-        authUser.value = AuthResource.loading()
+        //TODO 39 - Delete AuthResource loading value, because that declare in SessionManager
+//        authUser.value = AuthResource.loading()
 
-        val source : LiveData<AuthResource<User>> = LiveDataReactiveStreams.fromPublisher(
-            authApi.getUser(userId).
+        //TODO 30 - Change ouput Observer to AuthResource<User>
+        //TODo 41 - Delete addSource and change with sessionManager function
+        sessionManager.authenticateWithId(queryUserId(userId))
+    }
+
+    //TODO 40 - Create new method to return LiveDataReactiveStreams
+    private fun queryUserId(id : Int) : LiveData<AuthResource<User>>{
+        return LiveDataReactiveStreams.fromPublisher(
+            authApi.getUser(id).
                 //TODO 29 - Create onErrorReturn and Map
                 //instead calling on error happen
                 onErrorReturn {
@@ -64,35 +77,12 @@ class AuthViewModel @Inject constructor(private val authApi: AuthApi) : ViewMode
                 }).
                 subscribeOn(Schedulers.io())
         )
-
-        //TODO 30 - Change ouput Observer to AuthResource<User>
-        authUser.addSource(source, object : Observer<User?>, androidx.lifecycle.Observer<AuthResource<User>> {
-            override fun onChanged(user: AuthResource<User>) {
-                authUser.value = user
-                authUser.removeSource(source)
-            }
-
-            override fun onComplete() {
-
-            }
-
-            override fun onSubscribe(d: Disposable) {
-
-            }
-
-            override fun onNext(t: User) {
-
-            }
-
-            override fun onError(e: Throwable) {
-
-            }
-        })
     }
 
 
     //TODO 20 - Create observeUser function to return authUser
-    fun observeUser() : LiveData<AuthResource<User>>{
-        return authUser
+    //TODO 38 - rename this function and change return value
+    fun observeAuthState() : LiveData<AuthResource<User>>{
+        return sessionManager.getAuthUser()
     }
 }
