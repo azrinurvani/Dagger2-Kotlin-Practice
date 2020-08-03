@@ -3,13 +3,10 @@ package com.mobile.azrinurvani.dagger2kotlinpractice.ui.auth
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.LiveDataReactiveStreams
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.mobile.azrinurvani.dagger2kotlinpractice.SessionManager
 import com.mobile.azrinurvani.dagger2kotlinpractice.models.User
-import com.mobile.azrinurvani.dagger2kotlinpractice.network.AuthApi
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
+import com.mobile.azrinurvani.dagger2kotlinpractice.network.auth.AuthApi
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.functions.Function
 import javax.inject.Inject

@@ -1,5 +1,6 @@
 package com.mobile.azrinurvani.dagger2kotlinpractice.di.main
 
+import com.mobile.azrinurvani.dagger2kotlinpractice.ui.main.posts.PostsFragment
 import com.mobile.azrinurvani.dagger2kotlinpractice.ui.main.profile.ProfileFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -10,5 +11,9 @@ abstract class MainFragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeProfileFragment() : ProfileFragment
+
+    //TODO 70 - Add contributePostsFragment
+    @ContributesAndroidInjector
+    abstract fun contributePostsFragment() : PostsFragment
 
 }

@@ -1,4 +1,4 @@
-package com.mobile.azrinurvani.dagger2kotlinpractice.network
+package com.mobile.azrinurvani.dagger2kotlinpractice.network.auth
 
 import com.mobile.azrinurvani.dagger2kotlinpractice.models.User
 import io.reactivex.Flowable

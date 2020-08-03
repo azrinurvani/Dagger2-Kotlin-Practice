@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.mobile.azrinurvani.dagger2kotlinpractice.BaseActivity
 import com.mobile.azrinurvani.dagger2kotlinpractice.R
+import com.mobile.azrinurvani.dagger2kotlinpractice.ui.main.posts.PostsFragment
 import com.mobile.azrinurvani.dagger2kotlinpractice.ui.main.profile.ProfileFragment
 
 class MainActivity : BaseActivity() {
@@ -23,7 +24,7 @@ class MainActivity : BaseActivity() {
 
     private fun testFragment(){
         supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container,ProfileFragment())
+            .replace(R.id.main_container,PostsFragment())
             .commit()
     }
 
