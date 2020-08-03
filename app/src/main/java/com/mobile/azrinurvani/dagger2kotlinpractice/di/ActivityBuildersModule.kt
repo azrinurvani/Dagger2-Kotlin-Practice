@@ -5,6 +5,7 @@ import com.mobile.azrinurvani.dagger2kotlinpractice.di.auth.AuthModule
 import com.mobile.azrinurvani.dagger2kotlinpractice.ui.auth.AuthActivity
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.auth.AuthViewModelModule
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.main.MainFragmentBuildersModule
+import com.mobile.azrinurvani.dagger2kotlinpractice.di.main.MainViewModelsModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -23,7 +24,9 @@ abstract class ActivityBuildersModule {
     //TODO 45- Add contributeAndroidInjector for MainActivity
     @ContributesAndroidInjector(modules = [
         //TODO 52 - Register MainFragmentBuildersModule in MainActivityBuilder
-        MainFragmentBuildersModule::class
+        MainFragmentBuildersModule::class,
+        //TODO 55 - Register MainViewModel on contribueMainActivity as subcomponent
+        MainViewModelsModule::class
     ])
     abstract fun contributeMainActivity() : MainActivity
 

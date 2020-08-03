@@ -18,7 +18,6 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Toast.makeText(this,"MainActivity",Toast.LENGTH_LONG).show()
         testFragment()
     }
 
