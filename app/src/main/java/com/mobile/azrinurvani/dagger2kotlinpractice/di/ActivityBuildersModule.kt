@@ -2,10 +2,12 @@ package com.mobile.azrinurvani.dagger2kotlinpractice.di
 
 import com.mobile.azrinurvani.dagger2kotlinpractice.ui.main.MainActivity
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.auth.AuthModule
+import com.mobile.azrinurvani.dagger2kotlinpractice.di.auth.AuthScope
 import com.mobile.azrinurvani.dagger2kotlinpractice.ui.auth.AuthActivity
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.auth.AuthViewModelModule
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.main.MainFragmentBuildersModule
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.main.MainModule
+import com.mobile.azrinurvani.dagger2kotlinpractice.di.main.MainScope
 import com.mobile.azrinurvani.dagger2kotlinpractice.di.main.MainViewModelsModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -15,6 +17,8 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuildersModule {
 
+    //TODO 103 - Add annotation @AuthScope for AuthContribute
+    @AuthScope
     @ContributesAndroidInjector(modules= [
         //TODO 14 - Dont forget add AuthViewModelModule at contributeActivity Module
         AuthViewModelModule::class,
@@ -22,6 +26,8 @@ abstract class ActivityBuildersModule {
     ])
     abstract fun contributeAuthActivity() : AuthActivity
 
+    //TODO 104 - Add annotation @MainScope for MainContribute
+    @MainScope
     //TODO 45- Add contributeAndroidInjector for MainActivity
     @ContributesAndroidInjector(modules = [
         //TODO 52 - Register MainFragmentBuildersModule in MainActivityBuilder

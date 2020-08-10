@@ -15,7 +15,9 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 import javax.inject.Inject
 import android.content.Intent
+import com.mobile.azrinurvani.dagger2kotlinpractice.models.User
 import com.mobile.azrinurvani.dagger2kotlinpractice.ui.main.MainActivity
+
 
 
 class AuthActivity : DaggerAppCompatActivity() {
@@ -35,6 +37,14 @@ class AuthActivity : DaggerAppCompatActivity() {
     lateinit var providerFactory: ViewModelProviderFactory
 
     lateinit var viewModel : AuthViewModel
+//
+//    @Inject
+//    @Named("app_user")
+//    lateinit var user1: User
+//
+//    @Inject
+//    @Named("auth_user")
+//    lateinit var user2: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +60,13 @@ class AuthActivity : DaggerAppCompatActivity() {
 
         subscribeObserver()
         setLogo()
+
+//        //This is test memory when using Singleton Scope
+//        Log.d(TAG, "onCreate : SingletonScope : $user1")
+//
+//        //This is test memory when using Singleton Scope
+//        Log.d(TAG, "onCreate : AuthScope : $user1")
+
     }
 
     private fun setLogo(){

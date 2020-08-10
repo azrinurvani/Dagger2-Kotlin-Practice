@@ -10,12 +10,14 @@ import retrofit2.Retrofit
 @Module
 class MainModule {
 
+    //TODO 106 - Add @MainScope for main module
+    @MainScope
     //TODO 79 - Add new depedency to provide PostsRecyclerAdapter
     @Provides
     open fun provideAdapter() : PostsRecyclerAdapter{
         return PostsRecyclerAdapter()
     }
-
+    //TODO 106 - Add @MainScope for main module
     @Provides
     open fun provideMainApi(retrofit: Retrofit) : MainApi{
         return retrofit.create(MainApi::class.java)

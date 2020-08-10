@@ -51,11 +51,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             //TODO 97 - Add this for fix drawer can't closed
             android.R.id.home->{
-                if (drawer_layout.isDrawerOpen(GravityCompat.START)){
+                return if (drawer_layout.isDrawerOpen(GravityCompat.START)){
                     drawer_layout.closeDrawer(GravityCompat.START)
-                    return true
+                    true
                 }else{
-                    return false
+                    false
                 }
             }
         }

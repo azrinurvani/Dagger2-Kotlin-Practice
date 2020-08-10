@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
 import com.mobile.azrinurvani.dagger2kotlinpractice.R
+import com.mobile.azrinurvani.dagger2kotlinpractice.models.User
 import com.mobile.azrinurvani.dagger2kotlinpractice.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -55,6 +56,14 @@ class AppModule {
     open fun provideAppDrawable(application: Application) : Drawable {
         return ContextCompat.getDrawable(application,R.drawable.logo)!!
     }
+
+//    //TODO 107 - This is just for test for scoping singleton
+//    @Singleton
+//    @Provides
+//    @Named("app_user")
+//    open fun someUser() : User {
+//        return User()
+//    }
 
 
 }
