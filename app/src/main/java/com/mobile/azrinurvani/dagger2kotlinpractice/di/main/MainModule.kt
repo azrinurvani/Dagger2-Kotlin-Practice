@@ -18,6 +18,7 @@ class MainModule {
         return PostsRecyclerAdapter()
     }
     //TODO 106 - Add @MainScope for main module
+    @MainScope
     @Provides
     open fun provideMainApi(retrofit: Retrofit) : MainApi{
         return retrofit.create(MainApi::class.java)
